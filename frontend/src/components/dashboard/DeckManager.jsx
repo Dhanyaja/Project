@@ -186,16 +186,6 @@ const DeckManager = () => {
                     >
                       <Trash2 className="h-4 w-4 text-red-500" />
                     </Button>
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleUpdateCard(card);
-                      }}
-                    >
-                      <Settings className="h-4 w-4 text-blue-500" />
-                    </Button>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-2 overflow-hidden">
