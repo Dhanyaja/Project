@@ -54,19 +54,6 @@ const DeckManager = () => {
     }
   };
 
-  // const fetchDecks = async () => {
-  //   const newUrl = `${url}/api/deck/decklist`;
-  //   try {
-  //     const response = await axios.get(newUrl, {
-  //       headers: { token },
-  //     });
-  //     const sortedDecks = response.data.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  //     setDecks(sortedDecks);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const handleDeleteDeck = async (id, name) => {
     if (
       !window.confirm(`Are you sure you want to delete the deck "${name}"?`)
@@ -120,15 +107,12 @@ const DeckManager = () => {
   const handleDeleteCard = async (cardId) => {
     if (!window.confirm("Are you sure you want to delete this card?")) return;
     try {
-      const deleteUrl = `${url}/api/card/deletecard`;
-      await axios.delete(deleteUrl, {
-        headers: { token },
-        data: { id: cardId },
-      });
+      const deleteUrl = `${url}/api/card/deletecard/${cardId}`;
+      await axios.get(deleteUrl, { headers: { token } });
       console.log(`Card ${cardId} deleted`);
-      // refresh cards
-      displayCardsOfDeck(selectedDeck);
-      await cardsCountFun();
+
+      await displayCardsOfDeck(selectedDeck);
+      await cardsCountFunc();
     } catch (error) {
       console.error("Failed to delete card:", error);
     }
