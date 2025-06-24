@@ -23,7 +23,7 @@ const DeckManager = () => {
 
   
 
-  const { url, decks, setDecks, fetchDecks } = useContext(StoreContext);
+  const { url, decks, setDecks, fetchDecks, cardsCountFunc } = useContext(StoreContext);
   const token = localStorage.getItem("token");
   const [selectedDeck, setSelectedDeck] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -128,6 +128,7 @@ const DeckManager = () => {
       console.log(`Card ${cardId} deleted`);
       // refresh cards
       displayCardsOfDeck(selectedDeck);
+      await cardsCountFun();
     } catch (error) {
       console.error("Failed to delete card:", error);
     }
