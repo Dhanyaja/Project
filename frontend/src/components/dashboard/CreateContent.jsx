@@ -51,7 +51,7 @@ const CreateContent = () => {
       console.log("card added");
       setNewCardData({ question: "", answer: "" });
       setSelectedDeck("");
-      cardsCountFunc();
+      await cardsCountFunc();
     } catch (error) {
       console.log(error);
     } finally {
