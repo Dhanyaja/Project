@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+  import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../ui/Button";
 import { BarChart3, BookOpen, Brain, LogOut, Settings } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/Card";
@@ -8,12 +8,17 @@ import Analytics from "./Analytics";
 import CreateContent from "./CreateContent";
 import StudyQueue from "./StudyQueue";
 import { StoreContext } from "../../context/StoreContext";
+import {useLocation, useNavigate} from "react-router-dom"
 import axios from "axios";
 
 const Dashboard = () => {
-  const [activeTab, setActiveTab] = useState("study");
   const { setIsAuthenticated, userName, decks, cardsCount, dueCardsFunc, dueCardsLength, cardsCountFunc, fetchDecks } =
     useContext(StoreContext);
+  const navigate  = useNavigate();
+  const location = useLocation();
+
+  const currentTab = location.pathname.split("/")[2] || "study";
+
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -34,7 +39,7 @@ const Dashboard = () => {
         {/* Header */}
         <header className="bg-white shadow-sm border-b">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-4">
+            <div className="flex justify-between items-center py-4">  
               <div className="flex items-center">
                 <Brain className="h-8 w-8 text-indigo-600 mr-2" />
                 <h1 className="text-2xl font-bold text-gray-900">StudySpace</h1>
@@ -84,8 +89,8 @@ const Dashboard = () => {
 
           {/* Main Content */}
           <Tabs
-            value={activeTab}
-            onValueChange={setActiveTab}
+            value={currentTab}
+            onValueChange={(val) => navigate(`/dashboard/${val}`)}
             className="space-y-6"
           >
             <TabsList className="grid w-full grid-cols-4">
@@ -119,6 +124,7 @@ const Dashboard = () => {
               <Analytics />
             </TabsContent>
           </Tabs>
+
         </div>
       </div>
     </div>
