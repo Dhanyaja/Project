@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import LandingPage from "../components/landing/LandingPage";
 import { StoreContext } from "../context/StoreContext";
 import { Brain } from "lucide-react";
-import Dashboard from "../components/dashboard/Dashboard";
 import AuthModal from "../components/auth/AuthModal";
 
 const Index = () => {
+  const navigate = useNavigate();
   const { isLoading, isAuthenticated, setIsAuthenticated, setUserName } =
     useContext(StoreContext);
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -17,7 +18,13 @@ const Index = () => {
       setUserName(user);
       setIsAuthenticated(true);
     }
-  }, [setUserName, setIsAuthenticated]); 
+  }, [setUserName, setIsAuthenticated]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard/study", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   if (isLoading) {
     return (
@@ -28,10 +35,6 @@ const Index = () => {
         </div>
       </div>
     );
-  }
-
-  if (isAuthenticated) {
-    return <Dashboard />;
   }
 
   return (
